@@ -7,21 +7,15 @@ require (
 	github.com/agnivade/levenshtein v1.2.1
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/apparentlymart/go-cidr v1.1.0
-	github.com/ceph/go-ceph v0.37.0
 	github.com/coocood/freecache v1.2.4
-	github.com/digitalocean/go-libvirt v0.0.0-20251202224409-8b0babaf9393
 	github.com/eko/gocache/lib/v4 v4.2.3
 	github.com/eko/gocache/store/freecache/v4 v4.2.4
-	github.com/go-resty/resty/v2 v2.17.1
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/gorilla/mux v1.8.1
 	github.com/huandu/xstrings v1.5.0
 	github.com/inhies/go-bytesize v0.0.0-20220417184213-4913239db9cf
 	github.com/kdomanski/iso9660 v0.4.0
-	github.com/klauspost/compress v1.18.2
 	github.com/kowabunga-cloud/common v0.64.1
-	github.com/lima-vm/go-qcow2reader v0.7.1
-	github.com/machinebox/progress v0.2.0
 	github.com/matcornic/hermes v1.3.0
 	github.com/mdlayher/arp v0.0.0-20220512170110-6706a2966875
 	github.com/netdata/go.d.plugin v0.58.1
@@ -59,8 +53,8 @@ require (
 	github.com/imdario/mergo v0.3.16 // indirect
 	github.com/jaytaylor/html2text v0.0.0-20230321000545-74c2419ad056 // indirect
 	github.com/josharian/native v1.1.0 // indirect
+	github.com/klauspost/compress v1.18.2 // indirect
 	github.com/lorenzosaino/go-sysctl v0.3.1 // indirect
-	github.com/matryer/is v1.4.1 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mdlayher/ethernet v0.0.0-20220221185849-529eae5b6118 // indirect
 	github.com/mdlayher/packet v1.1.2 // indirect

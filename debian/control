@@ -3,7 +3,7 @@ Section: web
 Priority: extra
 Maintainer: The Kowabunga Project <maintainers@kowabunga.cloud>
 Uploaders: The Kowabunga Project <maintainers@kowabunga.cloud>
-Build-Depends: debhelper, librados-dev, librbd-dev, gcc
+Build-Depends: debhelper
 Standards-Version: 3.9.2
 
 Package: kowabunga-kahuna
@@ -12,13 +12,6 @@ Depends: ${misc:Depends}
 Description: Kowabunga Kahuna Orchestrator
  Kowabunga stands for 'Kvm Orchestrator With A BUNch of Goods Added'.
  Kahuna is the core service engine, providing REST API frontend and orchestration capabilities.
-
-Package: kowabunga-kaktus-agent
-Architecture: any
-Depends: ${misc:Depends}, librados2, librbd1
-Description: Kowabunga Kaktus Agent
- Kowabunga stands for 'Kvm Orchestrator With A BUNch of Goods Added'
- This is Kaktus agent, meant to control KVM/libvirt hypervisors and Ceph distributed storage.
 
 Package: kowabunga-kawaii-agent
 Architecture: any

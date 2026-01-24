@@ -21,8 +21,6 @@ SDK_OPENAPI_SPEC = "https://raw.githubusercontent.com/kowabunga-cloud/openapi/re
 #export GOPATH = ""
 export GO111MODULE = on
 BINDIR = bin
-PLUGINS_DIR = plugins
-PLUGINS_KAKTUS_PKG_DIR = ./kowabunga/kaktus/plugins
 
 NODE_DIR = ./node_modules
 YARN = $(NODE_DIR)/.bin/yarn
@@ -111,13 +109,6 @@ kahuna: bin ; $(info $(M) building Kahuna orchestrator…) @
 		-ldflags='$(DEBUG) -X $(PKG_NAME).version=$(VERSION) -X $(PKG_NAME).codename=$(CODENAME)' \
 		-o $(BINDIR) ./cmd/kahuna
 
-.PHONY: kaktus
-kaktus: ; $(info $(M) building Kaktus agent…) @
-	$Q go build \
-		-gcflags="kowabunga/...=-e" \
-		-ldflags='$(DEBUG)' \
-		-o $(BINDIR) ./cmd/kaktus
-
 .PHONY: kawaii
 kawaii: ; $(info $(M) building Kawaii agent…) @
 	$Q go build \
@@ -139,20 +130,8 @@ kowarp: ; $(info $(M) building Kowarp agent…) @
                 -ldflags='$(DEBUG)' \
                 -o $(BINDIR) ./cmd/kowarp
 
-# Makes sure plugins directory is created
-.PHONY: plugins
-plugins: ; $(info $(M) create local plugins directory) @
-	$Q mkdir -p $(PLUGINS_DIR)
-
-.PHONY: plugin-ceph
-plugin-ceph: plugins ; $(info $(M) building Kaktus Ceph plugin…) @
-	$Q go build -buildmode=plugin \
-		-gcflags="kowabunga/...=-e" \
-		-ldflags='$(DEBUG)' \
-		-o $(PLUGINS_DIR) $(PLUGINS_KAKTUS_PKG_DIR)/ceph
-
 .PHONY: build
-build: kahuna kaktus kawaii konvey plugin-ceph
+build: kahuna kawaii konvey
 
 .PHONY: tests
 tests: ; $(info $(M) testing Kowabunga suite…) @
@@ -197,7 +176,6 @@ fmt: ; $(info $(M) running go fmt…) @
 .PHONY: clean
 clean: ; $(info $(M) cleaning…)	@ ## Cleanup everything
 	$Q rm -rf $(BINDIR)
-	$Q rm -rf $(PLUGINS_DIR)
 	$Q rm -rf $(NODE_DIR)
 	$Q rm -f package-lock.json
 	$Q rm -f package.json
