@@ -10,7 +10,7 @@ import (
 	"os"
 
 	"github.com/kowabunga-cloud/common/klog"
-	"github.com/kowabunga-cloud/kowabunga/kowabunga/kawaii"
+	"github.com/kowabunga-cloud/kawaii/internal/kawaii"
 )
 
 func main() {
