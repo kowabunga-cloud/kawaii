@@ -10,10 +10,13 @@
 package kawaii
 
 import (
+	"net"
 	"testing"
 
 	"github.com/kowabunga-cloud/common/agents"
 	"github.com/kowabunga-cloud/common/agents/templates"
+	"github.com/kowabunga-cloud/common/metadata"
+	"github.com/vishvananda/netlink"
 )
 
 const (
@@ -192,4 +195,135 @@ var testKawaiiConfig = map[string]any{
 
 func TestKawaiiTemplate(t *testing.T) {
 	agents.AgentTestTemplate(t, testKawaiiServices, TestKawaiiServicesConfigDir, testKawaiiConfig)
+}
+
+func TestKawaiiSysctlSettings(t *testing.T) {
+	keys := map[string]string{}
+	for _, s := range kawaiiSysctlSettings {
+		keys[s.Key] = s.Value
+	}
+
+	cases := []struct{ key, want string }{
+		{"net.ipv4.ip_forward", "1"},
+		{"net.netfilter.nf_conntrack_max", "524288"},
+		{"net.ipv4.conf.all.accept_redirects", "0"},
+	}
+	for _, c := range cases {
+		if keys[c.key] != c.want {
+			t.Errorf("sysctl %s: got %q, want %q", c.key, keys[c.key], c.want)
+		}
+	}
+}
+
+func TestKawaiiServicesShape(t *testing.T) {
+	for _, name := range []string{"nftables", "keepalived", "strongswan"} {
+		svc, ok := kawaiiServices[name]
+		if !ok {
+			t.Errorf("service %q missing", name)
+			continue
+		}
+		if len(svc.ConfigPaths) == 0 {
+			t.Errorf("service %q has no config paths", name)
+		}
+	}
+}
+
+func TestFindPrivateVIPIPsecPeerOwner(t *testing.T) {
+	tests := []struct {
+		name     string
+		ipsec    metadata.KawaiiIPsecConnectionMetadata
+		kawaii   metadata.KawaiiMetadata
+		expected string // empty string means expect nil
+	}{
+		{
+			name:  "returns private peer VIP for matching VRRP group",
+			ipsec: metadata.KawaiiIPsecConnectionMetadata{IP: "60.0.0.1"},
+			kawaii: metadata.KawaiiMetadata{
+				VirtualIPs: []metadata.VirtualIpMetadata{
+					{VRRP: 1, VIP: "60.0.0.1", Public: true},
+					{VRRP: 1, VIP: "10.3.0.1", Public: false},
+				},
+			},
+			expected: "10.3.0.1",
+		},
+		{
+			name:  "selects correct peer among multiple VRRP groups",
+			ipsec: metadata.KawaiiIPsecConnectionMetadata{IP: "60.0.0.2"},
+			kawaii: metadata.KawaiiMetadata{
+				VirtualIPs: []metadata.VirtualIpMetadata{
+					{VRRP: 1, VIP: "60.0.0.1", Public: true},
+					{VRRP: 1, VIP: "10.3.0.1", Public: false},
+					{VRRP: 2, VIP: "60.0.0.2", Public: true},
+					{VRRP: 2, VIP: "10.3.0.2", Public: false},
+				},
+			},
+			expected: "10.3.0.2",
+		},
+		{
+			name:  "no VIP match returns nil",
+			ipsec: metadata.KawaiiIPsecConnectionMetadata{IP: "192.168.1.1"},
+			kawaii: metadata.KawaiiMetadata{
+				VirtualIPs: []metadata.VirtualIpMetadata{
+					{VRRP: 1, VIP: "60.0.0.1", Public: true},
+					{VRRP: 1, VIP: "10.3.0.1", Public: false},
+				},
+			},
+			expected: "",
+		},
+		{
+			name:  "sole VIP in group has no peer returns nil",
+			ipsec: metadata.KawaiiIPsecConnectionMetadata{IP: "60.0.0.1"},
+			kawaii: metadata.KawaiiMetadata{
+				VirtualIPs: []metadata.VirtualIpMetadata{
+					{VRRP: 1, VIP: "60.0.0.1", Public: true},
+				},
+			},
+			expected: "",
+		},
+		{
+			name:   "empty VirtualIPs returns nil",
+			ipsec:  metadata.KawaiiIPsecConnectionMetadata{IP: "60.0.0.1"},
+			kawaii: metadata.KawaiiMetadata{VirtualIPs: nil},
+			expected: "",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := findPrivateVIPIPsecPeerOwner(&tt.ipsec, &tt.kawaii)
+			if tt.expected == "" {
+				if result != nil {
+					t.Errorf("expected nil, got %s", result)
+				}
+			} else {
+				if result == nil {
+					t.Fatalf("expected %s, got nil", tt.expected)
+				}
+				if result.String() != tt.expected {
+					t.Errorf("expected %s, got %s", tt.expected, result.String())
+				}
+			}
+		})
+	}
+}
+
+func TestRemoveConflictingRouteIfExistsNoRoutes(t *testing.T) {
+	_, ipNet, err := net.ParseCIDR("10.99.0.0/24")
+	if err != nil {
+		t.Fatal(err)
+	}
+	route := &netlink.Route{Dst: ipNet}
+	if err := removeConflictingRouteIfExists(route, []netlink.Route{}); err != nil {
+		t.Errorf("unexpected error with empty route list: %v", err)
+	}
+}
+
+func TestRemoveConflictingRouteIfExistsNoConflict(t *testing.T) {
+	_, dst1, _ := net.ParseCIDR("10.1.0.0/24")
+	_, dst2, _ := net.ParseCIDR("10.2.0.0/24")
+	route := &netlink.Route{Dst: dst1}
+	existing := []netlink.Route{{Dst: dst2}}
+	if err := removeConflictingRouteIfExists(route, existing); err != nil {
+		t.Errorf("unexpected error when no conflict: %v", err)
+	}
 }
