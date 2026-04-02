@@ -281,9 +281,9 @@ func TestFindPrivateVIPIPsecPeerOwner(t *testing.T) {
 			expected: "",
 		},
 		{
-			name:   "empty VirtualIPs returns nil",
-			ipsec:  metadata.KawaiiIPsecConnectionMetadata{IP: "60.0.0.1"},
-			kawaii: metadata.KawaiiMetadata{VirtualIPs: nil},
+			name:     "empty VirtualIPs returns nil",
+			ipsec:    metadata.KawaiiIPsecConnectionMetadata{IP: "60.0.0.1"},
+			kawaii:   metadata.KawaiiMetadata{VirtualIPs: nil},
 			expected: "",
 		},
 	}

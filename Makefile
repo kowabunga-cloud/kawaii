@@ -34,7 +34,7 @@ endif
 # This is our default target
 # it does not build/run the tests
 .PHONY: all
-all: mod fmt vet lint build ; @ ## Do all
+all: bin mod fmt vet lint build ; @ ## Do all
 	$Q echo "done"
 
 # This target grabs the necessary go modules
