@@ -3,7 +3,7 @@
 - Core Systems:
   - **(Big) Kahuna** (Hawaiian - expert, the most dominant thing) => orchestrator
 KVM HCI Nodes - Kador
-  - **Kaktus** (Kowabunga Affordable KVM and Tight Underneath Storage): HCI node 
+  - **Kaktus** (Kowabunga Affordable KVM and Tight Underneath Storage): HCI node
   - **Kiwi**: Kowabunga Inner Wan Interface
   - **Koala**: Web UI
 - as-a-service:
@@ -59,12 +59,12 @@ KVM HCI Nodes - Kador
   - host: Add 'eligible' flag to accept new workload
   - host: Add ping-of-death WS timeout to auto-reschedule workload
 
-  
+
 - Database:
   - Minimize DB calls (stop passing object id, reuse SQL connections)
 - "Dev Mode" for contributors w/ single-node sandbox image sandbox
 - [GWS](https://github.com/lxzan/gws) Web Socket server implementation replacement ?
-    
+
 ## Kiwi
 - **OPNSense** replacement: routing, WireGuard, OpenVPN, IPSEC, Firewall, NAT, BGP, OSPF
 - Micro footprint OS, prebuilt images on GitHub, with single binary accepting YAML (for tests) or reloading versioned config every X seconds from Kowabunga orchestrator API with network/nftables config and auto-reload, connection args to be retrieve from kernel cmdline (based on [Alpine](https://www.alpinelinux.org/) or [FlatCar](https://www.flatcar.org/))
