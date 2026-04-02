@@ -1,3 +1,36 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## 1.0.0 (2026-04-02)
+
+### Chores
+
+* add better gosec compliance ([3e986de](https://github.com/kowabunga-cloud/kawaii/commit/3e986de5f4781093c0345b3097d66754213f03db))
+* add Claude doc file ([cf7865f](https://github.com/kowabunga-cloud/kawaii/commit/cf7865f11e4a88017caf3426a13c32e22ed6d305))
+* add editor config ([32b7062](https://github.com/kowabunga-cloud/kawaii/commit/32b7062c89458781c55fe2eca4c8ef76f093e3e7))
+* add pre-commit hooks ([4549201](https://github.com/kowabunga-cloud/kawaii/commit/4549201f67ad075e1d1d4ef465d5233af8732543))
+* add semantic release config ([d563dd8](https://github.com/kowabunga-cloud/kawaii/commit/d563dd887f133b4f50a83c63577b2b20c13dc1f8))
+* always use latest version of build tools ([669383c](https://github.com/kowabunga-cloud/kawaii/commit/669383cf163a4e879c918697dac47de228f4bd16))
+* ignore some files ([141cde4](https://github.com/kowabunga-cloud/kawaii/commit/141cde48a49a8b2df144d9810c649a6ee7f83a19))
+* implement unit tests ([330de54](https://github.com/kowabunga-cloud/kawaii/commit/330de54f3be8c47c0855999655665e88830feace))
+* implement unit tests ([92bbdc6](https://github.com/kowabunga-cloud/kawaii/commit/92bbdc65e682dac2e66a4073f141072ec53ea26d))
+* remove apk build support ([243cfd5](https://github.com/kowabunga-cloud/kawaii/commit/243cfd56804dfde97367293231f65f483dbce954))
+* remove TODO, part of global project ([2953722](https://github.com/kowabunga-cloud/kawaii/commit/2953722320d9b77436adc2b27c2e5b7583e3c859))
+* remove trailing whitespace ([d6cf567](https://github.com/kowabunga-cloud/kawaii/commit/d6cf567116ea81bba5c310f83f59903b3f1cb573))
+* require go 1.26.1 ([7bb8f28](https://github.com/kowabunga-cloud/kawaii/commit/7bb8f28829ca9792692f21bc151dc3564342168d))
+* simplify debian packaging ([fa70f32](https://github.com/kowabunga-cloud/kawaii/commit/fa70f329105575579e526e8a4f1d1b5de30101e1))
+* update go dependencies ([17de2f0](https://github.com/kowabunga-cloud/kawaii/commit/17de2f08875e34879269f9da597ad4e0ed8d3aed))
+* update makefile directive name ([dd52501](https://github.com/kowabunga-cloud/kawaii/commit/dd52501483b759d1e597505e012039e291b52ae0))
+* use common action workflows ([ea52e34](https://github.com/kowabunga-cloud/kawaii/commit/ea52e348c984702c139df0c2202708cb9d02209d))
+
+### Documentation
+
+* add code owners ([ef6b6c2](https://github.com/kowabunga-cloud/kawaii/commit/ef6b6c2ca6856ef1c3b0440dada26dd4457ddcf3))
+* update changelog ([cb8ef64](https://github.com/kowabunga-cloud/kawaii/commit/cb8ef64d146d3f6922f8fce54630e34d50e46c55))
+* updated logo ([fdcf899](https://github.com/kowabunga-cloud/kawaii/commit/fdcf899f2ed780244135a8771dab9b6cfb36e1f0))
+* updated README ([a16117e](https://github.com/kowabunga-cloud/kawaii/commit/a16117e41e95279ee9f05e77e7c8812cf83644b0))
+
 ## 0.64.1 (2025-12-30)
 * **NEW**: use external Kowabunga 'common' package.
 
