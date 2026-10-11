@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.64.3](https://github.com/kowabunga-cloud/kawaii/compare/v0.64.2...v0.64.3) (2026-10-11)
+
+### Chores
+
+* add GitHub Sponsors FUNDING.yml ([2809f28](https://github.com/kowabunga-cloud/kawaii/commit/2809f28adbeaf20193754b56bff2d095e2e16edc))
+* update dependencies ([19c75fd](https://github.com/kowabunga-cloud/kawaii/commit/19c75fd293daaeec75f6457924b114b871abc166))
+
 ## [0.64.2](https://github.com/kowabunga-cloud/kawaii/compare/v0.64.1...v0.64.2) (2026-04-03)
 
 ### Chores
