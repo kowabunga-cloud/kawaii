@@ -1,2 +1,1 @@
 bin/kawaii                                                     /usr/bin
-debian/kowabunga-kawaii-agent.service                          /lib/systemd/system
